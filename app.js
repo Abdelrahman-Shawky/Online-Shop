@@ -4,14 +4,13 @@ const bodyParser = require('body-parser');
 const adminData = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 const path = require('path');
+const expressHbs = require('express-handlebars');
 
 const app = express();
-// set gloabal config value
-// can read them through app.get
-// share across application
-// use engine already installed
-// built in express support
-app.set('view engine', 'pug');
+
+// not built in like  pug
+app.engine('hbs', expressHbs({layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs'}));
+app.set('view engine', 'hbs');
 // set to views folder
 app.set('views', 'views');
 
