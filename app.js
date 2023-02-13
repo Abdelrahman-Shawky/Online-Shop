@@ -9,8 +9,7 @@ const expressHbs = require('express-handlebars');
 const app = express();
 
 // not built in like  pug
-app.engine('hbs', expressHbs({layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs'}));
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 // set to views folder
 app.set('views', 'views');
 
