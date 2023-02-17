@@ -1,10 +1,11 @@
 const http = require('http'); 
 const express = require('express');
 const bodyParser = require('body-parser');
-const adminData = require('./routes/admin.js');
+const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 const path = require('path');
-const expressHbs = require('express-handlebars');
+const errorController = require('./controllers/error');
+
 
 const app = express();
 
@@ -21,11 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // use studff in admin.js
 // order still matters
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).render('404.pug', {pageTitle: '404'});
-});
+app.use(errorController.get404);
     
 app.listen(3000)
