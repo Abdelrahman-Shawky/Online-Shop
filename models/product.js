@@ -43,17 +43,18 @@ module.exports = class Product {
             console.log(err);
             });
         }
-        // const p =path.join(path.dirname(require.main.filename), 
-        // 'data','products.json');
-        // fs.readFile(p, (err, data) =>{
-        //     let products = [];
-        //     if (!err){
-        //         products = JSON.parse(data);
-        //     }
-        //     products.push(this);
-        //     fs.writeFile(p, JSON.stringify(products), (err) =>{
-        //     console.log(err);
-        //     });
+        });
+    }
+
+    static delete(prodId) {
+        getProductsFromFile((products) => {
+            // const updatedProducts = products.filter(prod => prod.id !== prodId);
+            const existingProductIndex = products.findIndex(prod => prod.id === prodId);
+            const updatedProducts = [...products];
+            updatedProducts.splice(existingProductIndex, 1);
+            fs.writeFile(p, JSON.stringify(updatedProducts), (err) =>{
+                console.log(err);
+                });
         });
     }
 
