@@ -10,18 +10,18 @@
                         <article class="card product-item">
                             <header class="card__header">
                                 <h1 class="product__title">
-                                    <%= productDetails.find(p => p.id === product.id).title %>
+                                    <%= product.productData.title %>
                                 </h1>
                             </header>
                             <div class="card__image">
-                                <img src="<%= productDetails.find(p => p.id === product.id).imageUrl %>" alt="<%= productDetails.find(p => p.id === product.id).title %>">
+                                <img src="<%= product.productData.imageUrl %>" alt="<%= product.productData.title %>">
                             </div>
                             <p class="product__description">
-                                <%= productDetails.find(p => p.id === product.id).description %>
+                                <%= product.productData.description %>
                             </p>
                             <div class="card__content">
                                 <h2 class="product__price"> Price: 
-                                    <%= productDetails.find(p => p.id === product.id).price %>
+                                    <%= product.productData.price %>
                                 </h2>
                                 <h2 class="product__price"> Quantity: 
                                     <%= product.qty %>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="card__actions">
                                 <form action="/cart/delete" method="POST">
-                                    <input type="hidden" value= "<%= product.id %>" name= "productId">
+                                    <input type="hidden" value= "<%= product.productData.id %>" name= "productId">
                                     <button class="btn" type="submit">Delete</button>
                                 </form>
                             </div>
@@ -41,7 +41,7 @@
                         </div>
                 </div>
                 <% } else { %>
-                    <h1>No Products Found!</h1>
+                    <h1>Your Cart is Empty!</h1>
                     <% } %>
         </main>        
         <%- include('../includes/end.ejs') %>

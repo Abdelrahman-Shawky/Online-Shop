@@ -50,6 +50,27 @@ module.exports = class Cart {
                 );
             const existingProduct = cart.products[existingProductIndex]
             let updatedProduct;
+            if (existingProduct) {
+                cart.totalPrice -= (+productPrice)*cart.products[existingProductIndex].qty;
+                cart.products.splice(existingProductIndex,1);
+            }            
+            fs.writeFile(p, JSON.stringify(cart), err => {
+                console.log(err);
+            });
+        });
+    }
+    
+    static removeProduct(id, productPrice){
+        fs.readFile(p, (err, fileContent) => {
+            if (err){
+                return;
+            }
+            let cart = JSON.parse(fileContent);
+            const existingProductIndex = cart.products.findIndex(
+                prod => prod.id === id
+                );
+            const existingProduct = cart.products[existingProductIndex]
+            let updatedProduct;
             if (existingProduct.qty == 1) {
                 cart.products.splice(existingProductIndex,1);
             }
