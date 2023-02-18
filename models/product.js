@@ -69,4 +69,11 @@ module.exports = class Product {
             cb(product);
         });
     }
+
+    static findbyIds(ids, cb) {
+        getProductsFromFile(products => {
+            const filteredProducts = products.filter(({id}) => ids.includes(id));
+            cb(filteredProducts);
+        });
+    }
 };

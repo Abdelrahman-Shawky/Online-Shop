@@ -30,7 +30,6 @@ module.exports = class Cart {
             else {
                 updatedProduct = {id: id, qty: 1};
                 cart.products = [...cart.products, updatedProduct];
-
             }
             // + converts string to number
             cart.totalPrice = cart.totalPrice + +productPrice;
@@ -38,5 +37,41 @@ module.exports = class Cart {
                 console.log(err);
             });
         });
+    }
+
+    static deleteProduct(id, productPrice){
+        fs.readFile(p, (err, fileContent) => {
+            if (err){
+                return;
+            }
+            let cart = JSON.parse(fileContent);
+            const existingProductIndex = cart.products.findIndex(
+                prod => prod.id === id
+                );
+            const existingProduct = cart.products[existingProductIndex]
+            let updatedProduct;
+            if (existingProduct.qty == 1) {
+                cart.products.splice(existingProductIndex,1);
+            }
+            else {
+                cart.products[existingProductIndex].qty -= 1;
+            }
+            cart.totalPrice -= +productPrice;
+            fs.writeFile(p, JSON.stringify(cart), err => {
+                console.log(err);
+            });
+        });
+    }
+
+    static fetchAll(cb) {
+        // getProductsFromFile(cb);
+        fs.readFile(p, (err, data)=>{
+            if (err){
+                return cb([]);
+            }
+            else {
+                cb(JSON.parse(data));
+            }
+        }); 
     }
 };
