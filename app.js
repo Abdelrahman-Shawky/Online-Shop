@@ -5,6 +5,7 @@ const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 const path = require('path');
 const errorController = require('./controllers/error');
+const db = require('./util/database');
 
 
 const app = express();
@@ -13,7 +14,6 @@ const app = express();
 app.set('view engine', 'ejs');
 // set to views folder
 app.set('views', 'views');
-
 
 app.use(bodyParser.urlencoded({extended: false}));
 // serve static files
