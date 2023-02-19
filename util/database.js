@@ -1,14 +1,13 @@
-const mysql = require('mysql2');
+const {Sequelize} = require('sequelize');
 
-// pool of connections
-// run multiple queries simultan
-// pool finishes when app shut down
-const pool = mysql.createPool({
+const sequelize = new Sequelize(
+    'online-shop',
+    'root',
+    'rootroot',
+    {dialect: 'mysql',
     host: 'localhost',
-    user: 'root',
-    database: 'online-shop',
-    port:'3307',
-    password: 'rootroot'
-});
+    port: '3307'}
+);
 
-module.exports = pool.promise();
+module.exports = sequelize;
+
