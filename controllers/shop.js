@@ -55,47 +55,46 @@ exports.getProduct =(req,res, next) => {
 };
 
 exports.getCart =(req,res, next) => {
-    Cart.fetchAll((cart) => {
-        Product.fetchAll(productDetails => {
+    req.user.getCart()
+    .then(cart => {
+        return cart.getProducts()
+        .then(products => {
             res.render('shop/cart', {
-                prods: cart.products,
-                productDetails: productDetails,
-                totalPrice: cart.totalPrice, 
+                prods: products,
+                totalPrice: 0, 
                 pageTitle: 'Cart', 
                 path: '/cart'
-        });
+            });
         })
-    });
-};
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
 
-exports.getCart = (req, res, next) => {
-    Cart.fetchAll(cart => {
-      Product.fetchAll(products => {
-        const cartProducts = [];
-        for (product of products) {
-            const cartProductData = cart.products.find(
-            prod => prod.id === product.id
-            );
-            if (cartProductData) {
-                cartProducts.push({ productData: product, qty: cartProductData.qty });
-            }
-        }
-        res.render('shop/cart', {
-          path: '/cart',
-          pageTitle: 'Your Cart',
-          prods: cartProducts,
-          totalPrice: cart.totalPrice
-        });
-      });
-    });
+    // Cart.fetchAll((cart) => {
+    //     Product.fetchAll(productDetails => {
+    //         res.render('shop/cart', {
+    //             prods: cart.products,
+    //             productDetails: productDetails,
+    //             totalPrice: cart.totalPrice, 
+    //             pageTitle: 'Cart', 
+    //             path: '/cart'
+    //     });
+    //     })
+    // });
 };
 
 exports.postCart = (req,res,next) => {
     const prodId = req.body.productId;
-    Product.findbyId(prodId, (product) => {
-        Cart.addProduct(prodId, product.price);
-    }); 
-    res.redirect('/cart');
+
+    req.user.getCart()
+    .then(cart => {
+        
+    })
+    .catch(err => console.log(err));
+    // Product.findbyId(prodId, (product) => {
+    //     Cart.addProduct(prodId, product.price);
+    // }); 
+    // res.redirect('/cart');
 };
 
 exports.postDeleteCart = (req, res, next) => {
