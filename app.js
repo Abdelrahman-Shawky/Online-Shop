@@ -1,8 +1,8 @@
 const http = require('http'); 
 const express = require('express');
 const bodyParser = require('body-parser');
-// const adminRoutes = require('./routes/admin.js');
-// const shopRoutes = require('./routes/shop.js');
+const adminRoutes = require('./routes/admin.js');
+const shopRoutes = require('./routes/shop.js');
 const path = require('path');
 const errorController = require('./controllers/error');
 const MongoConnect = require('./util/database').mongoConnect;
@@ -25,8 +25,8 @@ app.use((req,res,next) => {
     next();
 });
 
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 app.use(errorController.get404);
 
 MongoConnect(() =>{
