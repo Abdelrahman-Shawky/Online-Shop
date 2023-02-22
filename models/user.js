@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Product = require('./product');
+
 const Schema =  mongoose.Schema;
 const userSchema = new Schema({
     name: {
@@ -16,23 +18,41 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.addToCart = function(product) {
-        const cartProductIndex = this.cart.items.findIndex(cp => {
-            return cp.productId.toString() == product._id.toString();
-        });
-        let newQuantity = 1;
-        const updatedCartItems = [...this.cart.items];
+    const cartProductIndex = this.cart.items.findIndex(cp => {
+        return cp.productId.toString() == product._id.toString();
+    });
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items];
 
-        if (cartProductIndex >=0) {
-            newQuantity = this.cart.items[cartProductIndex].quantity + 1;
-            updatedCartItems[cartProductIndex].quantity = newQuantity;
-        }
-        else {
-            updatedCartItems.push({productId: product._id, quantity: newQuantity})
-        }
-        const updatedCart = {items:updatedCartItems};
-        this.cart = updatedCart;
-        return this.save();
+    if (cartProductIndex >=0) {
+        newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+        updatedCartItems[cartProductIndex].quantity = newQuantity;
     }
+    else {
+        updatedCartItems.push({productId: product._id, quantity: newQuantity})
+    }
+    const updatedCart = {items:updatedCartItems};
+    this.cart = updatedCart;
+    return this.save();
+}
+
+userSchema.methods.deleteFromCart = function(productId) {
+    const cartProductIndex = this.cart.items.findIndex(cp => {
+        return cp.productId.toString() == productId.toString();
+    });
+
+    const updatedCartItems = [...this.cart.items];
+
+    if (cartProductIndex >=0) {
+        updatedCartItems.splice(cartProductIndex, 1);
+    }
+    else {
+
+    }
+    this.cart.items = updatedCartItems;
+    return this.save();
+
+}
 
 module.exports = mongoose.model('User', userSchema);
 
