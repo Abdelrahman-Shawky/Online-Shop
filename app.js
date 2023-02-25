@@ -43,18 +43,9 @@ app.use(shopRoutes);
 app.use(authRoutes);
 app.use(errorController.get404);
 
+mongoose.set("strictQuery", false);
 mongoose.connect(MONGODB_URI)
 .then(result => {
-    User.findOne().then(user => {
-        if(!user) {
-            const user = new User({
-                name: 'admin',
-                email: 'admin@admin.com',
-                cart: {items: []}
-            });
-            user.save();
-        }
-    })
     app.listen(3000);
 })
 .catch(err => console.log(err));
