@@ -54,7 +54,7 @@ exports.getCart =(req,res, next) => {
     .populate('cart.items.productId')
     .then(user => {
         res.render('shop/cart', {
-            prods: user.cart.items,
+            products: user.cart.items,
             totalPrice: 0, 
             pageTitle: 'Cart', 
             path: '/cart'
@@ -117,6 +117,5 @@ exports.getOrders =(req,res, next) => {
             orders: orders
         });
     })
-    .catch(err => console.log(err));
-    
+    .catch(err => console.log(err)); 
 };

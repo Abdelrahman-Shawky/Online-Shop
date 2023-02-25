@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
+const authRoutes = require('./routes/auth.js');
 const path = require('path');
 const errorController = require('./controllers/error');
 // const MongoConnect = require('./util/database').mongoConnect;
@@ -29,6 +30,7 @@ app.use((req,res,next) => {
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose.connect('mongodb+srv://abdelrahmanshawky:nuUTJaF9KJQqSrUE@cluster0.cgns5uz.mongodb.net/shop?retryWrites=true&w=majority')

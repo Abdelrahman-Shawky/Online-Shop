@@ -24,6 +24,11 @@
                 </a>
             </li>
         </ul>
+        <ul class= "main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+        </ul>
     </nav>
 </header>
 
@@ -47,6 +52,10 @@
                 </li>
                 <li class="mobile-nav__item">
                     <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
+                    </a>
+                </li>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login
                     </a>
                 </li>
             </ul>
