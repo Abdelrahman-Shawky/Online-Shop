@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Product = require('./product');
+const Order = require('./order');
+
 
 const Schema =  mongoose.Schema;
 const userSchema = new Schema({
@@ -16,6 +18,7 @@ const userSchema = new Schema({
             quantity: { type:Number, required: true}}]
     }
 });
+
 
 userSchema.methods.addToCart = function(product) {
     const cartProductIndex = this.cart.items.findIndex(cp => {
@@ -51,8 +54,66 @@ userSchema.methods.deleteFromCart = function(productId) {
     }
     this.cart.items = updatedCartItems;
     return this.save();
-
 }
+
+userSchema.methods.clearCart = function() {
+    this.cart = {items:[]};
+    return this.save();
+}
+
+// userSchema.methods.addOrder = function() {
+//     let products;
+//     return this.populate('cart.items.productId')
+//     .then(user => {
+//        products = user.cart.items
+//        console.log(products)
+//        let myUser = {
+//         name: this.name,
+//         userId: this._id
+//        }
+//        console.log(myUser)
+
+//        const order = new Order({
+//         products: products,
+//         user: myUser
+//        })
+//        console.log(order)
+
+//        return order.save()
+//     })
+//     .then(result =>{
+//         console.log('Ordered')
+//         this.cart = {items: []};
+//         this.save();
+//     })
+//     .catch(err => console.log(err));
+    
+    
+//     // const order = new Order({
+//     //     products: this.cart.items,
+//     //     user.name: this.name,
+//     //     user.userId: this._id
+//     // });
+
+//     // return order.save()
+//     // .then(result => {
+//     //     console.log('Ordered')
+//     //     this.cart = {items: []};
+//     //     this.save();
+//     // }) 
+//     // .catch(err => console.log(err))       
+// }
+
+userSchema.methods.getOrders = function() {
+    return Order.find({
+        "user.userId": this
+    })
+    .then(orders => {
+        return orders;
+    })
+    .catch(err => console.log(err));   
+}
+
 
 module.exports = mongoose.model('User', userSchema);
 
