@@ -27,7 +27,7 @@ exports.postLogin = (req, res, next) => {
         if (!user) {
             return res.redirect('/login');
         }
-        bcrypt.compare(password, user.password)
+        return bcrypt.compare(password, user.password)
         .then(resultMatch => {
             if (resultMatch) {
                 req.session.isLoggedIn = true;
