@@ -71,7 +71,11 @@ exports.postAddProduct =  (req,res,next) => {
         console.log("Created Product !!")
         res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));    
+    .catch(err => {
+        const error = new Error(err);
+        error.httpStatuseCode = 500;
+        return next(error); //skip all middleware till error handling middleware
+    });    
 };
 
 exports.getEditProduct = (req, res, next) =>{
@@ -143,7 +147,11 @@ exports.postEditProduct =  (req,res,next) => {
             res.redirect('/admin/products');
         });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        const error = new Error(err);
+        error.httpStatuseCode = 500;
+        return next(error); //skip all middleware till error handling middleware
+    });
 };
 
 exports.postDeleteProduct =  (req,res,next) => {
@@ -157,7 +165,11 @@ exports.postDeleteProduct =  (req,res,next) => {
         console.log('Deleted Product !!');
         res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        const error = new Error(err);
+        error.httpStatuseCode = 500;
+        return next(error); //skip all middleware till error handling middleware
+    });
 };
 
 
