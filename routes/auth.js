@@ -28,7 +28,7 @@ check('email').isEmail().withMessage('Please enter a valid email').custom((value
 }).normalizeEmail(), 
 body('password', 'Invalid Password').isLength({min:5}).isAlphanumeric(),
 body('confirmPassword').custom((value, {req}) => {
-    if(value === req.body.password) {
+    if(value !== req.body.password) {
         throw new Error('Passwords has to match!')
     }
     return true;

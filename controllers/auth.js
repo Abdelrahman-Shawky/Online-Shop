@@ -77,11 +77,11 @@ exports.postLogin = (req, res, next) => {
             validationErrors: []
           });
         }
-        bcrypt.hash(password, 12)
-        .then(hashedPassword => {
-          console.log(hashedPassword)
-        }
-        );
+        // bcrypt.hash(password, 12)
+        // .then(hashedPassword => {
+        //   console.log(hashedPassword)
+        // }
+        // );
         bcrypt.compare(password, user.password)
         .then(resultMatch => {
             if (resultMatch) {
@@ -135,7 +135,7 @@ exports.postSignup = (req, res, next) => {
       });
     }
 
-    bcrypt.hash(password, 12)
+    bcrypt.hash(password, 10)
       .then(hashedPassword => {
           const user = new User({
               email: email,
