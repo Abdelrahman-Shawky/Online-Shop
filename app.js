@@ -11,11 +11,12 @@ const User = require('./models/user');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-
+require('dotenv').config();
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
-const MONGODB_URI = 'mongodb+srv://abdelrahmanshawky:nuUTJaF9KJQqSrUE@cluster0.cgns5uz.mongodb.net/shop?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.DB_URI;
+const port = process.env.PORT || 3000;
 
 const app = express();
 const store = new MongoDBStore({
@@ -69,6 +70,6 @@ app.use((error, req, res, next) => {
 mongoose.set("strictQuery", false);
 mongoose.connect(MONGODB_URI)
 .then(result => {
-    app.listen(3000);
+    app.listen(port);
 })
 .catch(err => console.log(err));
